@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sayhi
+  name: sayhi
+  namespace: app
+spec:
+  selector:
+    matchLabels:
+      app: sayhi
+  template:
+    metadata:
+      labels:
+        app: sayhi
+    spec:
+      containers:
+      - image: beranm14/sayhi:latest
+        env:
+          - name: PORT
+            value: "3000"
+        imagePullPolicy: Always
+        name: sayhi
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
