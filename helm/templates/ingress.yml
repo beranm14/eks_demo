@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:168194167032:certificate/92aa5e0c-5e43-4266-aab1-b59050c78225
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    kubernetes.io/ingress.class: alb
+  name: {{ .Values.general.metadata.name | quote }}
+  namespace: {{ .Values.general.metadata.namespace | quote }}
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Values.general.metadata.name | quote }}
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix

@@ -1,0 +1,4 @@
+general:
+  metadata:
+    namespace: "helm-app"
+    name: "sayhi"

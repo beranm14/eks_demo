@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.general.metadata.name | quote }}
+  name: {{ .Values.general.metadata.name | quote }}
+  namespace: {{ .Values.general.metadata.namespace | quote }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.general.metadata.name | quote }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.general.metadata.name | quote }}
+    spec:
+      containers:
+      - image: beranm14/sayhi:latest
+        env:
+          - name: PORT
+            value: "3000"
+        imagePullPolicy: Always
+        name: {{ .Values.general.metadata.name | quote }}
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
