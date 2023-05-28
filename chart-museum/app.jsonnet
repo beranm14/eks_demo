@@ -36,6 +36,10 @@
             value: 'true',
           },
           {
+            name: 'env.open.DISABLE_API',
+            value: 'false',
+          },
+          {
             name: 'serviceAccount.create',
             value: 'true',
           },
@@ -51,8 +55,13 @@
       namespace: 'chartmuseum',
     },
     syncPolicy: {
+      automated: {
+        prune: true,
+        selfHeal: true,
+      },
       syncOptions: [
         'CreateNamespace=true',
+        'applyOutOfSyncOnly=true',
       ],
     },
   },

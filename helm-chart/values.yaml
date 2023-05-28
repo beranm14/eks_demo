@@ -2,3 +2,5 @@ general:
   metadata:
     namespace: "helm-app"
     name: "sayhi"
+  hostname: "sayhi-chart.trustsoft.beranm.cz"
+  port: 3000

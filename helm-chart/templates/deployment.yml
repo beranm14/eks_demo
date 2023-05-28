@@ -18,7 +18,7 @@ spec:
       - image: beranm14/sayhi:latest
         env:
           - name: PORT
-            value: "3000"
+            value: {{ .Values.general.port | quote }}
         imagePullPolicy: Always
         name: {{ .Values.general.metadata.name | quote }}
         resources:
@@ -31,4 +31,4 @@ spec:
         readinessProbe:
           httpGet:
             path: /healthz
-            port: 3000
+            port: {{ .Values.general.port }}

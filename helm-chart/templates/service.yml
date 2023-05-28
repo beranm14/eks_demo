@@ -7,9 +7,9 @@ metadata:
   namespace: {{ .Values.general.metadata.namespace | quote }}
 spec:
   ports:
-  - port: 3000
+  - port: {{ .Values.general.port }}
     protocol: TCP
-    targetPort: 3000
+    targetPort: {{ .Values.general.port }}
   selector:
     app: {{ .Values.general.metadata.name | quote }}
-  type: ClusterIP
+  type: NodePort

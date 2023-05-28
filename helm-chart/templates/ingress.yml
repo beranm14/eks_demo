@@ -10,12 +10,13 @@ metadata:
   namespace: {{ .Values.general.metadata.namespace | quote }}
 spec:
   rules:
-  - http:
+  - host: {{ .Values.general.hostname | quote }}
+    http:
       paths:
       - backend:
           service:
             name: {{ .Values.general.metadata.name | quote }}
             port:
-              number: 3000
+              number: {{ .Values.general.port }}
         path: /
         pathType: Prefix
