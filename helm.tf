@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "chart_museum" {
       "s3:PutObject",
     ]
     resources = [
-      aws_s3_bucket.chart_museum_bucket.arn
+      "${aws_s3_bucket.chart_museum_bucket.arn}/*"
     ]
   }
 }
@@ -51,11 +51,18 @@ module "iam_eks_role" {
   oidc_providers = {
     eks = {
       provider_arn               = module.eks.oidc_provider_arn
-      namespace_service_accounts = ["chart-museum:chart-museum"]
+      namespace_service_accounts = ["chartmuseum:chartmuseum"]
     }
   }
 }
 
 output "chart_museum_role_arn" {
     value = module.iam_eks_role.iam_role_arn
+}
+output "chart_bucket_name" {
+    value = aws_s3_bucket.chart_museum_bucket.bucket
+}
+
+output "chart_bucket_region" {
+    value = aws_s3_bucket.chart_museum_bucket.region
 }
