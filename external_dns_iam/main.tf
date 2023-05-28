@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "this_assume" {
     ]
   }
 
-    statement {
+  statement {
     sid    = "ChangeResourceRecordSets"
     effect = "Allow"
     actions = [

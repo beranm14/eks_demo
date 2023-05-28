@@ -1,17 +1,17 @@
 variable "service_account_name" {
-    description = "The name of the service account to create"
-    type        = string
-    default     = "external-dns"
+  description = "The name of the service account to create"
+  type        = string
+  default     = "external-dns"
 }
 
 variable "policy_allowed_zone_ids" {
-    description = "List of Route53 zone IDs to allow external-dns to manage"
-    type        = list(string)
-    default     = []
+  description = "List of Route53 zone IDs to allow external-dns to manage"
+  type        = list(string)
+  default     = []
 }
 
 variable "namespace" {
-    default = "default"
+  default = "default"
 }
 
 variable "irsa_assume_role_arn" {

@@ -1,7 +1,7 @@
 # resource "random_string" "chart_museum_bucket_suffix" {
 #   length  = 8
 #   special = false
-#     upper   = false
+#   upper   = false
 # }
 
 # resource "aws_s3_bucket" "chart_museum_bucket" {
@@ -58,12 +58,12 @@
 # }
 
 # output "chart_museum_role_arn" {
-#     value = module.iam_eks_role.iam_role_arn
+#   value = module.iam_eks_role.iam_role_arn
 # }
 # output "chart_bucket_name" {
-#     value = aws_s3_bucket.chart_museum_bucket.bucket
+#   value = aws_s3_bucket.chart_museum_bucket.bucket
 # }
 
 # output "chart_bucket_region" {
-#     value = aws_s3_bucket.chart_museum_bucket.region
+#   value = aws_s3_bucket.chart_museum_bucket.region
 # }

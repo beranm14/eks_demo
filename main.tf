@@ -64,22 +64,13 @@ module "eks" {
     instance_types = ["t3.medium"]
     capacity_type  = "SPOT"
 
-    # We are using the IRSA created below for permissions
-    # However, we have to deploy with the policy attached FIRST (when creating a fresh cluster)
-    # and then turn this off after the cluster/node group is created. Without this initial policy,
-    # the VPC CNI fails to assign IPs and nodes cannot join the cluster
-    # See https://github.com/aws/containers-roadmap/issues/1666 for more context
     iam_role_attach_cni_policy = true
   }
 
   eks_managed_node_groups = {
-    # Default node group - as provided by AWS EKS
     default_node_group = {
-      # By default, the module creates a launch template to ensure tags are propagated to instances, etc.,
-      # so we need to disable it to use the default template provided by the AWS EKS managed node group service
       use_custom_launch_template = false
-
-      disk_size = 50
+      disk_size                  = 50
     }
   }
 

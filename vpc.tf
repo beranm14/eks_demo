@@ -10,7 +10,7 @@ module "vpc" {
   public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
   intra_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 52)]
 
-  create_egress_only_igw          = true
+  create_egress_only_igw = true
 
   enable_nat_gateway   = true
   single_nat_gateway   = true
@@ -21,12 +21,12 @@ module "vpc" {
   create_flow_log_cloudwatch_log_group = true
 
   public_subnet_tags = {
-    "kubernetes.io/role/elb" = 1
+    "kubernetes.io/role/elb"              = 1
     "kubernetes.io/cluster/${local.name}" = "owned"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/role/internal-elb" = 1
+    "kubernetes.io/role/internal-elb"     = 1
     "kubernetes.io/cluster/${local.name}" = "owned"
   }
 
