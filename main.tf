@@ -14,7 +14,8 @@ data "aws_caller_identity" "current" {}
 data "aws_availability_zones" "available" {}
 
 locals {
-  name            = "beranm-testing-01"
+  prefix          = "beranm"
+  name            = "${local.prefix}-testing-01"
   cluster_version = "1.24"
   region          = "eu-west-1"
 

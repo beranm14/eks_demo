@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "cert_manager" {
 }
 
 resource "aws_iam_policy" "cert_manager" {
-  name        = "cert-manager"
+  name        = "${local.prefix}-cert-manager"
   path        = "/"
   description = "Policy for cert-manager service"
   policy      = data.aws_iam_policy_document.cert_manager.json
@@ -21,7 +21,7 @@ resource "aws_iam_policy" "cert_manager" {
 
 module "iam_eks_role_cert_manager" {
   source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  role_name = "cert-manager"
+  role_name = "${local.prefix}-cert-manager"
 
   role_policy_arns = {
     policy = aws_iam_policy.cert_manager.arn
