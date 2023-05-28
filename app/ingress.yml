@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:168194167032:certificate/92aa5e0c-5e43-4266-aab1-b59050c78225
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:168194167032:certificate/060a6d66-0f9a-41e2-801d-fb3b9542e573
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     kubernetes.io/ingress.class: alb
@@ -10,7 +10,8 @@ metadata:
   namespace: app
 spec:
   rules:
-  - http:
+  - host: app.trustsoft.beranm.cz
+    http:
       paths:
       - backend:
           service:
