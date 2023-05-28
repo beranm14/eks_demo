@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-dns
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/hostname: sayhi-traefik.trustsoft.beranm.cz
+  name: sayhi
+  namespace: app
+spec:
+  tls:
+    - hosts:
+        - sayhi-traefik.trustsoft.beranm.cz
+      secretName: trustsoft-beranm-tls
+  rules:
+    - host: sayhi-traefik.trustsoft.beranm.cz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sayhi
+                port:
+                  number: 3000

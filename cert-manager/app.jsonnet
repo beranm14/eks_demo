@@ -18,7 +18,27 @@
           {
             name: 'installCRDs',
             value: 'true',
-          }
+          },
+          {
+            name: 'serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn',
+            value: 'arn:aws:iam::168194167032:role/cert-manager',
+          },
+          {
+            name: 'extraEnv.env[0].name',
+            value: 'AWS_SDK_LOAD_CONFIG',
+          },
+          {
+            name: 'extraEnv.env[0].value',
+            value: '"true"',
+          },
+          {
+            name: 'extraEnv.env[1].name',
+            value: 'POD_NAMESPACE',
+          },
+          {
+            name: 'extraEnv.env[1].value',
+            value: 'cert-manager',
+          },
         ],
       },
     },
