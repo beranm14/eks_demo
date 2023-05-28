@@ -21,7 +21,15 @@
           },
           {
             name: 'txtOwnerId',
-            value: 'Z04333023IJ7G2JUEJXMX',
+            value: 'Z07994813KUXRPV2PHZX8',
+          },
+          {
+            name: 'env[0].name',
+            value: 'AWS_SDK_LOAD_CONFIG',
+          },
+          {
+            name: 'env[0].value',
+            value: '"true"',
           },
           {
             name: 'aws.region',
@@ -33,7 +41,7 @@
           },
           {
             name: "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn",
-            value: 'arn:aws:iam::168194167032:role/external-dns',
+            value: 'arn:aws:iam::168194167032:role/beranm-external-dns',
           }
         ],
       },

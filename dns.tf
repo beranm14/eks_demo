@@ -1,21 +1,47 @@
-# resource "aws_route53_zone" "primary" {
-#   name = "trustsoft.beranm.cz"
-# }
+resource "aws_route53_zone" "primary" {
+  name = "trustsoft.beranm.cz"
+}
 
-# output "name_servers" {
-#   value = aws_route53_zone.primary.name_servers
-# }
+output "name_servers" {
+  value = aws_route53_zone.primary.name_servers
+}
 
-# module "external_dns" {
-#     source = "./external_dns_iam"
+data "aws_iam_policy_document" "external_dns" {
+  statement {
+    sid    = "AllowEditObjects"
+    effect = "Allow"
+    actions = [
+      "route53:*",
+    ]
+    resources = [
+      "*",
+    ]
+  }
+}
 
-#     service_account_name = "${local.prefix}-external-dns"
-#     policy_allowed_zone_ids = [aws_route53_zone.primary.zone_id]
-#     irsa_assume_role_arn = module.eks.cluster_iam_role_arn
-#     cluster_identity_oidc_issuer = module.eks.oidc_provider
-#     cluster_identity_oidc_issuer_arn = module.eks.oidc_provider_arn
-# }
+resource "aws_iam_policy" "helm" {
+  name        = "${local.prefix}-external-dns"
+  path        = "/"
+  description = "Policy for external-dns service"
+  policy      = data.aws_iam_policy_document.external_dns.json
+}
 
-# output "external_dns_role" {
-#   value = module.external_dns.role
-# }
+module "external_dns" {
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  role_name = "${local.prefix}-external-dns"
+
+  role_policy_arns = {
+    policy = aws_iam_policy.helm.arn
+  }
+
+  oidc_providers = {
+    eks = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["default:external-dns"]
+    }
+  }
+}
+
+output "external_dns_role_arn" {
+    value = module.external_dns.iam_role_arn
+}
