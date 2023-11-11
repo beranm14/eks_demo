@@ -1,0 +1,19 @@
+# wordpressConfigureCache: true
+ingress:
+  enabled: true
+  hostname: mywordpress.local
+  tls: true
+  selfSigned: true
+
+persistence:
+  enabled: true
+  # size: 4Gi  # default is 10Gi
+
+pdb:
+  create: true
+
+autoscaling:
+  enabled: true
+
+metrics:
+  enabled: true
