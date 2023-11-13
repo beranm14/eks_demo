@@ -71,6 +71,9 @@ module "eks" {
     default_node_group = {
       use_custom_launch_template = false
       disk_size                  = 50
+      min_size                   = 0
+      max_size                   = 10
+      desired_size               = 0
     }
   }
 
