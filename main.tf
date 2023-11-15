@@ -16,7 +16,7 @@ data "aws_availability_zones" "available" {}
 locals {
   prefix          = "beranm"
   name            = "${local.prefix}-testing-01"
-  cluster_version = "1.24"
+  cluster_version = "1.28"
   region          = "eu-west-1"
 
   vpc_cidr = "10.0.0.0/16"
@@ -28,7 +28,7 @@ locals {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.13.1"
+  version = "19.20.0"
 
   cluster_name                   = local.name
   cluster_version                = local.cluster_version
@@ -71,9 +71,6 @@ module "eks" {
     default_node_group = {
       use_custom_launch_template = false
       disk_size                  = 50
-      min_size                   = 0
-      max_size                   = 10
-      desired_size               = 0
     }
   }
 
