@@ -40,6 +40,20 @@ module "ebs_csi_irsa_role" {
   }
 }
 
+module "efs_csi_irsa_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+
+  role_name             = "${local.name}-efs-csi"
+  attach_efs_csi_policy = true
+
+  oidc_providers = {
+    ex = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:efs-csi-controller-sa"]
+    }
+  }
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.20.0"
@@ -56,6 +70,10 @@ module "eks" {
     # https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html#csi-iam-role
     aws-ebs-csi-driver = {
       service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
+      most_recent              = true
+    }
+    aws-efs-csi-driver = {
+      service_account_role_arn = module.efs_csi_irsa_role.iam_role_arn
       most_recent              = true
     }
     kube-proxy = {
@@ -85,12 +103,17 @@ module "eks" {
     capacity_type  = "SPOT"
 
     iam_role_attach_cni_policy = true
+
+    vpc_security_group_ids = [aws_security_group.efs.id]
   }
 
   eks_managed_node_groups = {
     default_node_group = {
       use_custom_launch_template = false
       disk_size                  = 50
+      desired_size               = 2
+      min_size                   = 2
+      subnet_ids                 = [module.vpc.private_subnets[0]]
     }
   }
 

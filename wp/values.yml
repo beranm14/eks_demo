@@ -1,4 +1,7 @@
-# wordpressConfigureCache: true
+wordpressConfigureCache: true
+memcached:
+  enabled: true
+
 ingress:
   enabled: true
   hostname: mywordpress.local
@@ -7,7 +10,7 @@ ingress:
 
 persistence:
   enabled: true
-  size: 4Gi  # default is 10Gi
+  size: 6Gi  # default is 10Gi
 
 pdb:
   create: true
@@ -17,3 +20,22 @@ autoscaling:
 
 metrics:
   enabled: true
+
+# affinity:
+#   podAntiAffinity:
+#     preferredDuringSchedulingIgnoredDuringExecution:
+#     - weight: 100
+#       podAffinityTerm:
+#         labelSelector:
+#           matchExpressions:
+#             - key: app.kubernetes.io/instance
+#               operator: In
+#               values:
+#               - wp
+#         topologyKey: kubernetes.io/hostname
+
+replicaCount: 2
+
+
+global:
+  storageClass: efs

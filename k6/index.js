@@ -2,7 +2,7 @@ import http from "k6/http";
 import { check, fail } from 'k6';
 
 export const options = {
-  iterations: 100,
+  iterations: 1000,
   vus: 100,
 };
 
